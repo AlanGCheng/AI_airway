@@ -1,4 +1,7 @@
-import
+class AirPlane:
+    def __init__(self, airNum, UpPoint, DownPoint, uptime, UpPointName, DownPointName):
+
+
 
 
 class AirInit:

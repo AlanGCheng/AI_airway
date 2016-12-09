@@ -91,15 +91,7 @@ class AirPlane:
 
         '''
 
-        # print('Point location')
-        # print(pointLocation)
-        # print('self.up')
-        # print(self.Up)
-
         distance = math.sqrt(np.square(pointLocation[1] - self.Up[1]) + np.square(pointLocation[0] - self.Up[0]))
-
-        # print('distance')
-        # print(distance)
 
         time = float(self.upTime) + float(distance)
 
@@ -120,85 +112,18 @@ class AirPlane:
         '''
 
         ifCross = False
-        # CrossPoint = []
-
-        # print('INFO')
-        # print(self.Up)
-        # print(self.Down)
-        # print('----')
-        # print(comparedAir.Up)
-        # print(comparedAir.Down)
-        # print("DONE")
 
         if self.Up[1] > comparedAir.Up[1] and self.Down[1] < comparedAir.Down[1]:
             ifCross = True
-            # print('cross up')
-            # print(self.Up)
-            # print(self.Down)
-            #
-            # print(comparedAir.Up)
-            # print(comparedAir.Down)
-            # print('cross ture')
 
         elif self.Up[1] < comparedAir.Up[1] and self.Down[1] > comparedAir.Down[1]:
             ifCross = True
-            # print('cross up')
-            # print(self.Up)
-            # print(comparedAir.Up)
-            # print("cross true")
-
-        # # 如果不交叉，则航线是安全的，直接返回True
-        # if not ifCross:
-        #     return True
-
-        # # 如果交叉的话，求出交叉的点
-        # if ifCross:
-        #     # cross = linalg.solve((y - self.Down[1])/(self.Up[1] - self.Down[1]) = (x - self.Down[0])/(self.Up[0] - self.Down[0]), (y - comparedAir.Down[1])/(comparedAir.Up[1] - comparedAir.Down[1]) = (x - comparedAir.Down[0])/(comparedAir.Up[0] - comparedAir.Down[0]))
-        #     # a = np.array([],[])
-        #     x0 = self.Down[0]
-        #     y0 = self.Down[1]
-        #
-        #     x1 = self.Up[0]
-        #     y1 = self.Up[1]
-        #
-        #     x2 = comparedAir.Down[0]
-        #     y2 = comparedAir.Down[1]
-        #
-        #     x3 = comparedAir.Up[0]
-        #     y3 = comparedAir.Up[1]
-        #
-        #     y = ((y0-y1)*(y3-y2)*x0 + (y3-y2)*(x1-x0)*y0 + (y1-y0)*(y3-y2)*x2 + (x2-x3)*(y1-y0)*y2 ) / ( (x1-x0)*(y3-y2) + (y0-y1)*(x3-x2) )
-        #     x = x2 + (x3-x2)*(y-y2) / (y3-y2)
-        #
-        #     CrossPoint = [x, y]
-
-
-        # 如果不交叉，直接返回True，表示交叉是安全的
 
         if not ifCross:
             return True
             # print('safe')
 
         else:
-            # cross = linalg.solve((y - self.Down[1])/(self.Up[1] - self.Down[1]) = (x - self.Down[0])/(self.Up[0] - self.Down[0]), (y - comparedAir.Down[1])/(comparedAir.Up[1] - comparedAir.Down[1]) = (x - comparedAir.Down[0])/(comparedAir.Up[0] - comparedAir.Down[0]))
-            # a = np.array([],[])
-            # x0 = self.Down[0]
-            # y0 = self.Down[1]
-            #
-            # x1 = self.Up[0]
-            # y1 = self.Up[1]
-            #
-            # x2 = comparedAir.Down[0]
-            # y2 = comparedAir.Down[1]
-            #
-            # x3 = comparedAir.Up[0]
-            # y3 = comparedAir.Up[1]
-            #
-            # y = ((y0-y1)*(y3-y2)*x0 + (y3-y2)*(x1-x0)*y0 + (y1-y0)*(y3-y2)*x2 + (x2-x3)*(y1-y0)*y2 ) / ( (x1-x0)*(y3-y2) + (y0-y1)*(x3-x2) )
-            # x = x2 + (x3-x2)*(y-y2) / (y3-y2)
-
-            # CrossPoint = [x, y]
-
             mathtool = MyMathTools()
             CrossPoint = mathtool.crossPoint(Up1 = self.Up, Down1 = self.Down, Up2 = comparedAir.Up, Down2 = comparedAir.Down)
             # print(CrossPoint)
@@ -325,13 +250,6 @@ class AirWay:
             airWay[i][1] = item
             i += 1
 
-        # for item in airUpPoint.keys(), airDownPoint.keys().__reversed__():
-        #     print(item)
-        #     # (item1, item2) = item
-        #
-        #     # airWay.append([item1, item2])
-
-        # print(airWay)
         return airWay, airUpPoint, airDownPoint
 
     # 生成随机航线
@@ -390,9 +308,6 @@ class AirWay:
     def randomDiffAirWay():
 
         airWay = []
-
-        # airUpPoint = collections.OrderedDict()
-        # airDwonPoint = collections.OrderedDict()
 
         airUp = []
         for i in range(1, 13):
@@ -487,46 +402,21 @@ class AirWayPlan:
 
                     # 判断是否交叉
                     if nextWay.ifCrossSafe(item):
-                        # print('cross safe')
                         if nextWay.sameUpPointCheck(item):
-                            # print('up correct')
                             if nextWay.sameDownPointCheck(item):
-                                # print('down correct')
-                                # print('alright')
-                                # if nextWay.upTime - item.upTime > 1:
-                                # print(nextWay.Up)
-                                # print(nextWay.Down)
-                                # print('airway safe')
                                 ifCorrect = True
 
 
                     if ifCorrect == False:
-                        # print('airway not safe')
-                        # nextWay.upTime += 0.01
-                        # 起飞时间精确到分钟级别
                         nextWay.upTime += 1
-                        # print('item')
-                        # print(item.upTime)
 
             existAirTime.append(nextWay)
-            # print(nextWay.upTime)
-            # airPlaneList.remove(nextWay)
 
         return existAirTime
 
 
 if __name__ == "__main__":
-
-    # airWay, airUpPoint, airDownPoint = AirWay.easyAirWay()
-
-    # airWay, airUpPoint, airDownPoint = AirWay.randomAirWay()
-    # pickle.
-    # 使用 pickle 来保存用户数据，使得结果可以保存
     airWay, airUpPoint, airDownPoint = AirWay.randomDiffAirWay()
-
-    # print(airWay)
-    # print(airUpPoint)
-    # print(airDownPoint)
 
     airList = []
     for item in airWay:
@@ -540,13 +430,7 @@ if __name__ == "__main__":
 
     # todo:线路生成完成后，编写动画类，模拟航线的顺序
 
-    # plt.
     for item in airWay:
-
-        # print(airUpPoint[item[0]])
-        # print(airDownPoint[item[1]])
-
-        # plt.plot(airUpPoint[item[0]], airDownPoint[[item[1]]])
         pass
 
     plt.show()
