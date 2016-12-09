@@ -6,23 +6,20 @@
 # 终点的优先级设计（动态进行规划）
 
 import matplotlib.pyplot as plt
-# 图像问题，在每个线的中点标出此条航线的起飞时间
 from airWayV2 import AirPlane
 import random
 from airWayV3 import AirPlanPlus
 
 
-# 航班初始化：将航班数据进行初始化
 class AirInit:
-    def __init__(self):
-        pass
+    # 航班初始化：将航班数据进行初始化
 
-    # 将航班信息和航线信息进行初始化
-    def air_init(air_way_list):
+    @staticmethod
+    def air_init(list_of_air_way):
+        # 将航班信息和航线信息进行初始化
 
         count = 0
-        air_list = []
-        for air_way in air_way_list:
+        for air_way in list_of_air_way:
 
             air = AirPlane(airNum=count, UpPoint=air_way[0], DownPoint=air_way[1], uptime=0, UpPointName='start', DownPointName='end')
             count += 1
@@ -31,63 +28,53 @@ class AirInit:
         return air_list
 
 
-# 进行绘图
 class PlotAll:
-    def __init__(self):
-        pass
+    # 绘图函数集合
 
-    def plot_point(self, list1, list2):
+    @staticmethod
+    def plot_point(list1, list2):
+        # 画出两个列表中的点
 
-        for item in list1:
-            plt.plot(item, '--')
+        for item1 in list1:
+            plt.plot(item1, '--')
 
-        for item in list2:
-            plt.plot(item, '--')
+        for item2 in list2:
+            plt.plot(item2, '--')
 
         plt.show()
 
-    def plot_air_way(self, air_way_list):
+    @staticmethod
+    def plot_air_way(list_of_air_way):
+        # 画出航线
 
         plt.axis([0, 300, 0, 250])
 
         # 将航班起落点进行标记
-        xlist = []
-        ylist = []
-        for air_way in air_way_list:
-            for item in air_way:
-                xlist.append(item[0])
-                ylist.append(item[1])
-        plt.plot(xlist, ylist, 'bo')
+        x_list = []
+        y_list = []
+        for air_way in list_of_air_way:
+            for item1 in air_way:
+                x_list.append(item1[0])
+                y_list.append(item1[1])
+        plt.plot(x_list, y_list, 'bo')
 
         # 画出航班的航线
-        # print('hello')
-        for air_way in air_way_list:
-            # print(air_way)
+        for air_way in list_of_air_way:
             [[x1, y1], [x2, y2]] = air_way
-
-            # print('------')
-            # print(x1)
-            # print(y1)
-            # print(x2)
-            # print(y2)
-            # print('------')
 
             plt.plot([x1, x2], [y1, y2])
             plt.text((x1+x2)/2, (y1+y2)/2, 'time')
 
         plt.show()
 
-    def plot_air_way_with_time(self, air_list):
-        pass
 
-
-# 起点终点数量不等，每个终点降落不同数量的航班
 class AirWayGenWithRandomPoint:
-    def __init__(self):
-        pass
+    # 起点终点数量不等，每个终点降落不同数量的航班
 
-    # 生成起点终点不相等，距离不相等的一组航班降落点
-    def gene_new_air_way(self, up_point_num=12, down_point_num=10, fire_point_num=10, min_distance=100, max_distance=300):
+    @staticmethod
+    def gene_new_air_way(up_point_num=12, down_point_num=10, fire_point_num=10, min_distance=100, max_distance=300):
+        # 生成起点终点不相等，距离不相等的一组航班降落点
+
         # 在二维图像上面生成随机的起飞降落点，然后设置直线线路，对交叉点再进行检测
         # 在起点和终点不等的情况下，首先假设每个终点可以接受的航班数量是无限的，
         # 这样能够保证飞机飞往着火点之后能够尽快返航
@@ -132,16 +119,12 @@ class AirWayGenWithRandomPoint:
         return air_way_list
 
 
-class ResultShow:
-    def __init__(self):
-        pass
-
-
 class AirPlanV4(AirPlanPlus):
     def __init__(self):
         self.count = 0
 
-    def plan_with_non_equal_point(self, air_list, exist_air):
+    @staticmethod
+    def plan_with_non_equal_point(air_list, exist_air):
 
         # 随机选择一个初始起飞点， 也可以自己指派
         if len(air_list) > 0:
@@ -213,6 +196,5 @@ if __name__ == "__main__":
         for item in air_list:
             item.upTime = 0
 
-        # print(len(air_list))
-        # plan.air_plan_of_2d(air_list, [])
-        AirPlanV4.air_plan_of_2d(air_list, [])
+        exist_air = []
+        AirPlanV4.air_plan_of_2d(air_list, exist_air)
