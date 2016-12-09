@@ -4,6 +4,7 @@ import random
 import matplotlib.pyplot as plt
 
 
+# 一些数学工具
 class MyMathTools:
 
     # 求出交叉点信息，返回交叉点坐标
@@ -27,6 +28,7 @@ class MyMathTools:
         return point_cross
 
 
+# 飞机类
 class AirPlane:
 
     # number Up Down up_time
@@ -158,11 +160,12 @@ class AirInit:
         return a_list
 
 
+# 航班计划
 class AirPlan:
 
     # 保存所有的航班计划，防止出现重复的航班计划
     def __init__(self):
-        self.air_plan = []
+        self.air_plan_list = []
 
     # 将选定航班和list 进行对比，如果安全，返回修改值的air，否则返回 -1
     @staticmethod
@@ -191,7 +194,8 @@ class AirPlan:
         return air.up_time
 
     # 航班起飞计划
-    def air_plan(self, air_list, exist_air):
+    @staticmethod
+    def air_plan(air_list, exist_air):
 
         # 随机选择一个初始起飞点， 也可以自己指派
         if len(air_list) > 0:
@@ -203,7 +207,7 @@ class AirPlan:
         if len(air_list) == 0:
             # 当余下的航班为0时，如果当前航班可以，则加入航班计划，否则清空序列
 
-            time = self.if_safe_up(root_air, exist_air)
+            time = AirPlan.if_safe_up(root_air, exist_air)
             if time == -1:
                 del air_list, exist_air
                 return False
@@ -212,34 +216,22 @@ class AirPlan:
                 exist_air.append(root_air)
 
                 # 如果序列存在，返回False，结束循环，否则加入清单，并且进行输出
-                if exist_air in self.air_plan:
-                    return False
-                else:
-                    self.air_plan.append(exist_air)
-
-                # ------------------------------------------------------------------------
-                # plt.axis([0, 200, 0, 250])
-                #
-                # for item in exist_air:
-                #     air_str = item.UpName + ' to ' + item.DownName + ':' + str(item.up_time)
-                #     plt.plot([item.Up[0], item.Down[0]], [item.Up[1], item.Down[1]])
-                #     plt.text(item.Up[0], item.Up[1], item.up_time)
-                #     print(air_str)
-                #
-                # plt.show()
-                # print('------------------------------------------------------')
+                # if exist_air in AirPlan.air_plan_list:
+                #     return False
+                # else:
+                #     AirPlan.air_plan_list.append(exist_air)
 
                 return True
         else:
             # 当前的航班不为0 ，如果当前的航班可以，则加入序列，继续递归过程，否则，清空序列，结束当前线路
-            time = self.if_safe_up(root_air, exist_air)
+            time = AirPlan.if_safe_up(root_air, exist_air)
             if time == -1:
                 del air_list, exist_air
                 return False
             else:
                 root_air.up_time = time
                 exist_air.append(root_air)
-                self.air_plan_of_2d(air_list, exist_air)
+                AirPlan.air_plan(air_list, exist_air)
 
 
 class AirPlt:
@@ -286,8 +278,11 @@ if __name__ == "__main__":
 
     # 循环执行飞行计划
     limit = 100000
+    plan = AirPlan()
+
     for i in range(1, limit):
 
         the_list = air_list.copy()
+        exist_list = []
 
-        AirPlan.air_plan_of_2d(air_list=the_list, exist_air=[])
+        plan.air_plan(the_list, exist_list)
