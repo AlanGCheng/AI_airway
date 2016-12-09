@@ -142,36 +142,16 @@ class AirPlanV4(AirPlanPlus):
         self.count = 0
 
     def plan_with_non_equal_point(self, air_list, exist_air):
-        # air_plan = []
-
-        # todo：保证算法已经穷尽了以 root_air 为起飞基准点的所有的可能
-        # 解决方法1 ： 设计一个迭代算法，使得算法能够满足所有需求
 
         # 随机选择一个初始起飞点， 也可以自己指派
         if len(air_list) > 0:
             root_air = random.choice(air_list)
             air_list.remove(root_air)
-            # air_list.remove(root_air)
         else:
-            # print('error in this ')
             return False
 
-        # todo: 保证航路的运行
-        # todo: 保证 exist_air 的初始化
-        # exist_air = []
-        # exist_air.append(_air)
-
-        # todo:如果有多种可以选择的方向，如何处理
-
-        # 递归解决问题：
-        # 如果没有航班未指派，那么判断当前航班能否加入航班计划，
-        # 若能，加入，并且结束递归，否则，消除当前计划，并且结束递归
-        # 如果有航班未指派，那么顺序选择航班，，如果满足条件，将余下的列表进入递归流程
-        # 否则此方法不同，不进入递归流程
-
-        # 构造函数，判断当前航班能否在限制条件下起飞
-        # print('run this')
-        if len(air_list) == 0: # 当余下的航班为0时，如果当前航班可以，则加入航班计划，否则清空序列
+        if len(air_list) == 0:
+            # 当余下的航班为0时，如果当前航班可以，则加入航班计划，否则清空序列
 
             time = self.if_safe_up(root_air, exist_air)
             if time == -1:
@@ -187,7 +167,6 @@ class AirPlanV4(AirPlanPlus):
                 plan_num = 'the plan is :'
                 print(plan_num)
 
-
                 plt.axis([0, 400, 0, 400])
 
                 for item in exist_air:
@@ -198,27 +177,18 @@ class AirPlanV4(AirPlanPlus):
 
                 plt.show()
 
-
                 print('------------------------------------------------------')
 
                 return True
-                # self.air_plan_list.append(exist_air)
-                # ------------------------------------------------
 
-                # print('run good')
-
-        else: # 当前的航班不为0 ，如果当前的航班可以，则加入序列，继续递归过程，否则，清空序列，结束当前线路
+        else:
+            # 当前的航班不为0 ，如果当前的航班可以，则加入序列，继续递归过程，否则，清空序列，结束当前线路
             time = self.if_safe_up(root_air, exist_air)
             if time == -1:
-
-                # print(self.if_safe_up(root_air, exist_air))
 
                 del air_list, exist_air
                 return False
             else:
-
-                # print(self.if_safe_up(root_air, exist_air))
-                # root_air = self.if_safe_up(root_air, exist_air)
 
                 root_air.upTime = time
                 exist_air.append(root_air)
