@@ -129,23 +129,6 @@ class AirWayGenWithRandomPoint:
         plot = PlotAll()
         plot.plot_air_way(air_way_list)
 
-        # print('generate the new airway ')
-
-    # 检查航线是否符合规范
-    # def air_way_check(self):
-    #     pass
-
-    # 给定的每一个点，设定优先级
-    # def set_priority_each(self):
-    #     pass
-
-    # 指定一个点，然后设置优先级
-    # def set_priority_specially(self):
-    #     pass
-
-    # def generate_stay_point(self):
-    #     pass
-
         return air_way_list
 
 
@@ -242,12 +225,15 @@ class AirPlanV4(AirPlanPlus):
                 self.air_plan_of_2d(air_list, exist_air)
 
 if __name__ == "__main__":
+    # 首先生成随机的飞行路线
     a = AirWayGenWithRandomPoint()
     air_way_list = a.gene_new_air_way()
 
+    # 基于已有的飞行路线对航班进行初始化
     init = AirInit()
     air_info_list = AirInit.air_init(air_way_list=air_way_list)
 
+    # 生成飞行计划
     plan = AirPlanPlus()
 
     for i in range(1, 100000):
