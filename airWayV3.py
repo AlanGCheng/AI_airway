@@ -16,6 +16,16 @@ import random
 import matplotlib.pyplot as plt
 import copy
 
+
+# def plot_view(air_plan_list):
+#
+#     for item in air_plan_list:
+#
+#         plt.plot(item.Up, item.Down)
+#
+#     plt.show()
+
+
 class AirPlanPlus:
     def __init__(self):
         # 用于存储在给定的航班信息下的所有可能的航班起飞时间集合
@@ -145,9 +155,17 @@ class AirPlanPlus:
                 plan_num = 'the plan is :'
                 print(plan_num)
 
+
+                plt.axis([0, 200, 0, 250])
+
                 for item in exist_air:
                     air_str = item.UpName + ' to ' + item.DownName + ':' + str(item.upTime)
+                    plt.plot([item.Up[0], item.Down[0]], [item.Up[1], item.Down[1]])
+                    plt.text(item.Up[0], item.Up[1], item.upTime)
                     print(air_str)
+
+                plt.show()
+
 
                 print('------------------------------------------------------')
 
@@ -246,6 +264,8 @@ if __name__ == "__main__":
         air_plan_plus.air_plan_of_2d(air_list, [])
         # print('error route')
         count += 1
+
+    # 进行图像化输出
     # air_plan_list = air_plan_plus.air_plan_list
 
     # print(air_plan_list)
