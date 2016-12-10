@@ -215,11 +215,7 @@ class AirPlan:
                 root_air.up_time = time
                 exist_air.append(root_air)
 
-                # 如果序列存在，返回False，结束循环，否则加入清单，并且进行输出
-                # if exist_air in AirPlan.air_plan_list:
-                #     return False
-                # else:
-                #     AirPlan.air_plan_list.append(exist_air)
+                AirPlt.plot_air_way_with_time(exist_air)
 
                 return True
         else:
@@ -277,12 +273,21 @@ if __name__ == "__main__":
     air_list = AirInit.air_init(air_way_list)
 
     # 循环执行飞行计划
-    limit = 100000
+    limit = 100
     plan = AirPlan()
 
+    count = 0
     for i in range(1, limit):
 
         the_list = air_list.copy()
         exist_list = []
 
         plan.air_plan(the_list, exist_list)
+
+        print(count)
+        count += 1
+
+    # 将 plan_list 中的航空时序画出
+    plan_list = plan.air_plan_list
+    for item in plan_list:
+        AirPlt.plot_air_way_with_time(item)
