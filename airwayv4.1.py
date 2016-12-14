@@ -257,13 +257,15 @@ class AirPlt:
         for air in list_air:
 
             plt.plot([air.Up[0], air.Down[0]], [air.Up[1], air.Down[1]], 'bo')
-            plt.text([air.Up[0], air.Up[1]], str(air.up_time))
+            plt.plot([air.Up[0], air.Down[0]], [air.Up[1], air.Down[1]])
+            plt.text((air.Up[0] + air.Down[0])/2, (air.Up[1] + air.Down[1])/2, str(air.up_time))
+            print(air.up_time)
 
         plt.show()
         print('print done')
 
 
-if __name__ == "__main__":
+def easy_use():
 
     # 获取航线
     air_way_list = AirWayGenWithRandomPoint.gene_new_air_way()
@@ -276,7 +278,7 @@ if __name__ == "__main__":
     limit = 100
     plan = AirPlan()
 
-    count = 0
+    # count = 0
     for i in range(1, limit):
 
         the_list = air_list.copy()
@@ -284,10 +286,11 @@ if __name__ == "__main__":
 
         plan.air_plan(the_list, exist_list)
 
-        print(count)
-        count += 1
+        # print(count)
+        if len(exist_list) > 13:
+            AirPlt.plot_air_way_with_time(exist_list)
 
-    # 将 plan_list 中的航空时序画出
-    plan_list = plan.air_plan_list
-    for item in plan_list:
-        AirPlt.plot_air_way_with_time(item)
+        # count += 1
+
+if __name__ == "__main__":
+    easy_use()
