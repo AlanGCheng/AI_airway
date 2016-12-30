@@ -1,3 +1,4 @@
+# 优化点：起点终点不等，同时航线不等距离
 import math
 import numpy as np
 import random
@@ -287,7 +288,7 @@ def easy_use():
         plan.air_plan(the_list, exist_list)
 
         # print(count)
-        if len(exist_list) > 13:
+        if len(exist_list) > 15:
             AirPlt.plot_air_way_with_time(exist_list)
 
         # count += 1
